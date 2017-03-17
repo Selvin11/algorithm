@@ -1,7 +1,8 @@
 
 1. [插入排序](#1)
-1. [归并排序](#1)
-
+2. [归并排序](#2)
+3. [冒泡排序](#3)
+4. [选择排序](#4)
 
 <h3 id="1">1. 插入排序</h3>
 
@@ -21,16 +22,14 @@
 <h3 id="2">2. 归并排序</h3>
 
   ```javascript 
-    // 归并排序  
-    // 将数组分为两组，假设每组以从小至大排序，开始比较两组中的第一项
-    // 将相对较小的付给空数组的第一项，然后将较小的数组的第二项继续与另一数组比较
-    // 重复上述步骤
-
-    /**
+   /**
      * 原数组：arr = [start,end] 
      * middle：数组一分为二的位置
      */
     function merge(arr, start, middle, end) {
+    // 将数组分为两组，假设每组以从小至大排序，开始比较两组中的第一项
+    // 将相对较小的付给空数组的第一项，然后将较小的数组的第二项继续与另一数组比较
+    // 重复上述步骤
         // 将数组一份为二
         var n1 = middle - start + 1, // 左边数组的长度
             n2 = end - middle; // 右边数组的长度
@@ -79,5 +78,52 @@
     
     // example
     merge_sort([1,2,4,2,5],0,4);
-
   ```
+<h3 id="3>3. 冒泡排序</h3>
+```javascript
+	function bubbleSort(arr) {
+    console.time('冒泡排序耗时');
+    for (var i = 0; i < arr.length; i++) {
+        // 从第一个数开始依次向右比较大小，比较arr.length次
+        for (var j = 0; j < arr.length - 1 - i; j++) {
+          // 依次比较，比较arr.length - 1 -i()
+          // 减 1 是因为两两比较，比较次数会因为没有自我比较少一次
+          // 减 i 是因为每一轮比较完之后，最后一个值就是当前最大的，因此不用参与比较
+          // 前者比后者大则交换数值
+            if (arr[j] > arr[j + 1]) {
+                var small = arr[j + 1];
+                arr[j + 1] = arr[j];
+                arr[j] = small;
+                arrState.push(deepCopy(arr));
+            }
+        }
+    }
+    console.timeEnd('冒泡排序耗时');
+    return arr;
+}
+```
+<h3 id="4>4. 选择排序</h3>
+```javascript
+    function selectionSort(arr) {
+        // 原数组称为无序区，排序之后的称为有序区 temp
+        // 从原数组轮询，查出每次最小（大）值，与有序区首位进行交换，轮询加1
+        // 无序区记录减一，有序区记录加一
+        var len = arr.length;
+        var minIndex, temp;
+        console.time('选择排序耗时');
+        for (var i = 0; i < len - 1; i++) {
+            minIndex = i;
+            for (var j = i + 1; j < len; j++) {
+                if (arr[j] < arr[minIndex]) {     //寻找最小的数
+                    minIndex = j;                 //将最小数的索引保存
+                }
+            }
+            temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+            arrState.push(deepCopy(arr));
+        }
+        console.timeEnd('选择排序耗时');
+        return arr;
+    }
+```

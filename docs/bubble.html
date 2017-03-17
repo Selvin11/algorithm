@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>冒泡排序</title>
+    <script src="jquery.min.js"></script>
+    <style>
+    .flex-wrap {
+        display: flex;
+        align-items: flex-end;
+    }
+    
+    .flex-item {
+        /*flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]*/
+        flex: 1 1 auto;
+        margin: 0 15px;
+        text-align: center;
+        background-color: #ccc;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="flex-wrap" id="chart">
+    </div>
+    <script>
+    var arr = [3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48];
+    var arrState = []; // 保存排序时每一轮执行之后的arr的值，实质每一轮的arr快照
+    function insertSort(arr) {
+        for (var j = 1; j < arr.length; j++) {
+            var key = arr[j]; // j=1,从第二个开始，与前面一个比较大小
+            var i = j - 1;
+            while (i >= 0 && arr[i] > key) {
+                arr[i + 1] = arr[i];
+                i = i - 1;
+            }
+            arr[i + 1] = key; // 如果前者比后者小，则不变
+        }
+    }
+    // 冒泡排序
+    function bubbleSort(arr) {
+        console.time('冒泡排序耗时');
+        for (var i = 0; i < arr.length; i++) {
+            // 从第一个数开始依次向右比较大小，比较arr.length次
+            for (var j = 0; j < arr.length - 1 - i; j++) {
+                // 依次比较，比较arr.length - 1 -i()
+                // 减 1 是因为两两比较，比较次数会因为没有自我比较少一次
+                // 减 i 是因为每一轮比较完之后，最后一个值就是当前最大的，因此不用参与比较
+                // 前者比后者大则交换数值
+                if (arr[j] > arr[j + 1]) {
+                    var small = arr[j + 1];
+                    arr[j + 1] = arr[j];
+                    arr[j] = small;
+                    arrState.push(deepCopy(arr));
+                }
+            }
+        }
+        console.timeEnd('冒泡排序耗时');
+        return arr;
+    }
+
+
+    makeChart(arr); // 先根据起始arr制作出图标
+    bubbleSort(arr); // 对arr进行排序，得到每一轮的快照arrState
+    console.log(arrState);
+    animateChart(arrState);
+
+    // 根据数组制作图标
+    function makeChart(arr) {
+        // 1. 读取数组
+        // 2. 为数组每一个元素创建一个flex-item，并将值赋予其height
+        // 3. 插入document
+        var graph = []; // 图标每一列的容器
+        arr.forEach(function(item, index) {
+            var graphList = createGraphList(item);
+            graph.push(graphList);
+        })
+
+        var dom = graph.reduce(function(x, y) {
+            return x + y;
+        });
+        document.getElementById('chart').innerHTML = dom;
+    }
+
+    function createGraphList(item) {
+        return '<div class="flex-item" style="height: ' + item + 'px;">'+ item +'</div>';
+    }
+
+    
+    // 排序动画实现方式 ： 将排序中每一轮的最终arr的状态保存在一个数组中
+
+    function animateChart(arr) {
+        var i = 0;
+        var timer = setInterval(function() {
+            //执行次数跟两两比较次数一致
+            if (i > arr.length - 2) {
+                clearInterval(timer);
+                timer = null;
+            }
+            makeChart(arr[i]);
+            i++;
+        }, 1000);
+        
+    }
+
+    // 深拷贝
+    function deepCopy(p, c) {　　　　
+        var c = c || [];　　　　
+        for (var i in p) {
+            // 当为对象或者数组时对其进行函数递归，即深度拷贝（复制值，非值的地址引用）
+            　　　　　　
+            if (typeof p[i] === 'object') {　　　　　　　　
+                c[i] = (p[i].constructor === Array) ? [] : {};　　　　　　　　
+                deepCopy(p[i], c[i]);　　　　　　
+            } else {　　　　　　　　　
+                c[i] = p[i];　　　　　　
+            }　　　　
+        }　　　　
+        return c;　　
+    }
+    </script>
+</body>
+
+</html>
