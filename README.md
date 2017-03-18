@@ -81,7 +81,7 @@
   ```
 <h3 id="3>3. 冒泡排序</h3>
 ```javascript
-	function bubbleSort(arr) {
+function bubbleSort(arr) {
     console.time('冒泡排序耗时');
     for (var i = 0; i < arr.length; i++) {
         // 从第一个数开始依次向右比较大小，比较arr.length次
@@ -100,6 +100,23 @@
     }
     console.timeEnd('冒泡排序耗时');
     return arr;
+}
+// 改进版，增加pos参数记录每次轮询排序之后最后交换的位置索引
+function bubbleSort(arr){
+  var i = arr.length - 1; 
+  while (i > 0){
+    var pos = 0; // 每次轮询排序均从起始位置开始
+    for(var j = 0; j < i; j++){
+      if(arr[j]>arr[j+1]){
+        pos = j; // 前者比后者大，进行位置交换，并记录该值
+        var key = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = key;  
+      }
+    }
+    i = pos;
+  }
+  return arr;
 }
 ```
 <h3 id="4>4. 选择排序</h3>
