@@ -79,7 +79,12 @@
     // example
     merge_sort([1,2,4,2,5],0,4);
   ```
+
+
 <h3 id="3">3. 冒泡排序</h3>
+
+
+
 ```javascript
 function bubbleSort(arr) {
     console.time('冒泡排序耗时');
@@ -119,7 +124,12 @@ function bubbleSort(arr){
   return arr;
 }
 ```
+
+
 <h3 id="4">4. 选择排序</h3>
+
+
+
 ```javascript
 function selectionSort(arr) {
   // 原数组称为无序区，排序之后的称为有序区 temp
