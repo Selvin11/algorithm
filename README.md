@@ -121,26 +121,26 @@ function bubbleSort(arr){
 ```
 <h3 id="4>4. 选择排序</h3>
 ```javascript
-    function selectionSort(arr) {
-        // 原数组称为无序区，排序之后的称为有序区 temp
-        // 从原数组轮询，查出每次最小（大）值，与有序区首位进行交换，轮询加1
-        // 无序区记录减一，有序区记录加一
-        var len = arr.length;
-        var minIndex, temp;
-        console.time('选择排序耗时');
-        for (var i = 0; i < len - 1; i++) {
-            minIndex = i;
-            for (var j = i + 1; j < len; j++) {
-                if (arr[j] < arr[minIndex]) {     //寻找最小的数
-                    minIndex = j;                 //将最小数的索引保存
-                }
-            }
-            temp = arr[i];
-            arr[i] = arr[minIndex];
-            arr[minIndex] = temp;
-            arrState.push(deepCopy(arr));
-        }
-        console.timeEnd('选择排序耗时');
-        return arr;
+function selectionSort(arr) {
+  // 原数组称为无序区，排序之后的称为有序区 temp
+  // 从原数组轮询，查出每次最小（大）值，与有序区首位进行交换，轮询加1
+  // 无序区记录减一，有序区记录加一
+  var len = arr.length;
+  var minIndex, temp;
+  console.time('选择排序耗时');
+  for (var i = 0; i < len - 1; i++) {
+    minIndex = i;
+    for (var j = i + 1; j < len; j++) {
+      if (arr[j] < arr[minIndex]) {     //寻找最小的数
+        minIndex = j;                 //将最小数的索引保存
+      }
     }
+    temp = arr[i];
+    arr[i] = arr[minIndex];
+    arr[minIndex] = temp;
+    arrState.push(deepCopy(arr));
+  }
+  console.timeEnd('选择排序耗时');
+  return arr;
+}
 ```
